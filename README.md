@@ -227,3 +227,22 @@ HTTP Body
 
 - Assert for text exist: HTTPS_REQUIRED
 - Assert for text exist: Requests must be made over HTTPS
+
+## J) NASASoundAPIGETCallWithLimitGreaterThanDefault25
+
+### Description:
+
+This test sends valid 'limit' value '25'. For default query, count limits to specified value.
+
+Steps:
+
+Generate Request:
+
+c) Enter Query Parameter: name=limit , value=25
+
+Validate Response:
+
+b) Response body:
+
+- Field: count = 25
+- Field: results = array of 25 soundcloud objects
