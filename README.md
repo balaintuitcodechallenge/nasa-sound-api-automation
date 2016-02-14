@@ -7,6 +7,7 @@ This repo contains automated tests implemented in JAVA Programming language to v
 - REST Client: Spring REST Template
 - Data Format: JSON
 - API Web Service: REST
+- Build System: Maven
 
 
 # Requirements
@@ -27,6 +28,12 @@ Response:
 ````
 
 **Note:** To access soundcloud download & stream URL's, we need *client_id*/ *authentication* from SoundCloud. For sake of simplicity, these two URL's are ignored during validation. 
+
+# Running/Executing Automated Tests
+
+- Clone this repo
+- Update 'nasa_sound_api_automation.properties' file under directory 'src/test/resources' with your NASA API Key
+- mvn clean test
 
 # Test Cases
 
