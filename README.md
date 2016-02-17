@@ -253,3 +253,11 @@ b) Response body:
 
 - Field: count = 25
 - Field: results = array of 25 soundcloud objects
+
+# Running Tests against Mock Service
+
+- Follow instructions in Mock NASA Sound API Service. Git Repo: https://github.com/cicdaas/mock-nasa-sound-api-service
+- Update 'nasa_sound_api_automation.properties' file under directory 'src/test/resources' with your NASA API Key. Comment-out properties related to Real Service and un-comment Mock Service properties
+- mvn clean test -Dgroup=nasa-sound-api-regression -DexcludedGroups=real-svc-only
+
+Note: Couple of tests pass only against Real Service (like neg test for HTTP protocol & 'api_key' validation). These are grouped as 'real-svc-only' and skipped when running against Mock Service.
