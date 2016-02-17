@@ -195,6 +195,8 @@ public class NASASoundAPITest extends Assert {
         List<String> rateLimit = responseHolder.getHeaders().get(rateLimitHeaderName);
         softAssert.assertEquals(rateLimit.size(), 1, "Header: " + rateLimitHeaderName + " has more than one value!");
         softAssert.assertEquals(rateLimit.get(0), "1000", "Header: " + rateLimitHeaderName + " didn't match!");
+        int rateLimitRemaining = getRateLimitRemaining(responseHolder);
+        softAssert.assertTrue(rateLimitRemaining < 1000, "Ratelimit Remaining is greater than 1000");
 
         // response body
         List<SoundTrack> soundTracks = responseHolder.getResponse().getResults();
