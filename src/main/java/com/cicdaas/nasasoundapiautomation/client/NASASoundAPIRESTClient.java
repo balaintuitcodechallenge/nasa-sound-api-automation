@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,14 @@ import com.cicdaas.nasasoundapiautomation.dto.NASAGETSoundTrackResponse;
 import com.cicdaas.nasasoundapiautomation.dto.NASAGETSoundTrackResponseHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.qos.logback.classic.Logger;
+
 public class NASASoundAPIRESTClient {
+
+    private static final Logger LOG = (Logger) LoggerFactory.getLogger(NASASoundAPIRESTClient.class);
+
+    @Value("#{nasaSoundAPIAutomationProperties['nasa.sound.api.protocol']}")
+    protected String nasaSoundAPIProtocol;
 
     @Value("#{nasaSoundAPIAutomationProperties['nasa.sound.api.host']}")
     protected String nasaSoundAPIHost;
@@ -34,8 +42,8 @@ public class NASASoundAPIRESTClient {
 
     @PostConstruct
     public void initialize() {
-        apiURL = String.format("https://%s:%s%s?api_key=%s", nasaSoundAPIHost, nasaSoundAPIPort, nasaSoundAPIContextPath, 
-                nasaAPIKey);
+        apiURL = String.format("%s://%s:%s%s?api_key=%s", nasaSoundAPIProtocol, nasaSoundAPIHost, nasaSoundAPIPort, 
+                nasaSoundAPIContextPath, nasaAPIKey);
     }
 
     public NASAGETSoundTrackResponseHolder getSoundTrack() throws Exception {
@@ -64,17 +72,19 @@ public class NASASoundAPIRESTClient {
     }
 
     public NASAGETSoundTrackResponseHolder getSoundTrackWithoutAPIKey() throws Exception  {
-        String apiURL = String.format("https://%s:%s%s", nasaSoundAPIHost, nasaSoundAPIPort, nasaSoundAPIContextPath);
+        String apiURL = String.format("%s://%s:%s%s", nasaSoundAPIProtocol, nasaSoundAPIHost, nasaSoundAPIPort, 
+                nasaSoundAPIContextPath);
         return getSoundTrackResponse(apiURL);
     }
 
     public NASAGETSoundTrackResponseHolder getSoundTrackWithSpecificAPIKey(String key) throws Exception  {
-        String apiURL = String.format("https://%s:%s%s?api_key=%s", nasaSoundAPIHost, nasaSoundAPIPort, nasaSoundAPIContextPath, 
-                key);
+        String apiURL = String.format("%s://%s:%s%s?api_key=%s", nasaSoundAPIProtocol, nasaSoundAPIHost, nasaSoundAPIPort, 
+                nasaSoundAPIContextPath, key);
         return getSoundTrackResponse(apiURL);
     }
 
     private NASAGETSoundTrackResponseHolder getSoundTrackResponse(String url) throws Exception {
+        LOG.debug("NASA Sound API URL: " + url);
         RestTemplate restTemplate = new RestTemplate();
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
         messageConverters.add(new StringHttpMessageConverter());

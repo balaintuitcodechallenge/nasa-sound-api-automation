@@ -125,7 +125,7 @@ public class NASASoundAPITest extends Assert {
         }
     }
 
-    @Test(groups = {"nasa-sound-api-regression", "nasa-sound-api-sanity"})
+    @Test(groups = {"nasa-sound-api-regression", "real-svc-only", "nasa-sound-api-sanity"})
     public void testNegNASASoundAPIGETCallwithInvalidKey() {
         try {
             String key = "123";
@@ -176,7 +176,7 @@ public class NASASoundAPITest extends Assert {
         }
     }
 
-    @Test(groups = {"nasa-sound-api-regression", "nasa-sound-api-sanity"})
+    @Test(groups = {"nasa-sound-api-regression", "real-svc-only", "nasa-sound-api-sanity"})
     public void testNegNASASoundAPIGETCallWithInvalidHTTPProtocol() {
         try {
             client.getSoundTrackUsingHTTPProtocol();
